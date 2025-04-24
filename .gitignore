@@ -1,0 +1,7 @@
+# .NET API
+JobTracker.API/bin/
+JobTracker.API/obj/
+.vscode/
+*.log
+.DS_Store
+.env
