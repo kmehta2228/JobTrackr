@@ -25,22 +25,6 @@ A full-stack job application tracker built with **.NET Core**, **React**, and **
 
 ## 🐳 Docker Setup (PostgreSQL)
 
-We use Docker to run PostgreSQL locally:
+We use Docker to run PostgreSQL locally.
 
-### 📄 `docker-compose.yml`
-```yaml
-services:
-  db:
-    image: postgres:15
-    container_name: jobtrackr-db
-    environment:
-      POSTGRES_USER: kalp
-      POSTGRES_PASSWORD: kalp123
-      POSTGRES_DB: jobtrackr
-    ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
 
-volumes:
-  pgdata:
