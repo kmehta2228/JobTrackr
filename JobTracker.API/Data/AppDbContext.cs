@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using JobTracker.API.Models;
 
-namespace JobTrackr.API.Data
+namespace JobTracker.API.Data
 {
     public class AppDbContext : DbContext
     {
