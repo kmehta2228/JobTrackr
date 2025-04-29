@@ -37,7 +37,7 @@ namespace JobTracker.API.Controllers
         [HttpPost]
         public async Task<ActionResult<JobApplication>> Create(JobApplication job)
         {
-            var createdJob = _service.CreateAsync(job);
+            var createdJob =await _service.CreateAsync(job);
             //await _service.SaveChangesAsync();
             return CreatedAtAction(nameof(GetById), new { id = createdJob.Id }, createdJob);
         }
