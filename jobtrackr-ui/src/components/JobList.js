@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import api from '../api';
 import { toast } from 'react-toastify';
 
-const JobList = ({ refresh, onEdit, searchQuery }) => {
+const JobList = ({ refresh, onEdit, searchQuery, statusFilter }) => {
   const [jobs, setJobs] = useState([]);
 
   useEffect(() => {
@@ -30,14 +30,16 @@ const JobList = ({ refresh, onEdit, searchQuery }) => {
     }
   };
 
-  // 🔥 AFTER all functions, ADD this:
   const filteredJobs = jobs.filter((job) => {
     const roleMatch = job.role.toLowerCase().includes(searchQuery.toLowerCase());
     const companyMatch = job.companyName.toLowerCase().includes(searchQuery.toLowerCase());
-    return roleMatch || companyMatch;
+    const matchesSearch = roleMatch || companyMatch;
+
+    const matchesStatus = statusFilter === "All" || job.status === statusFilter;
+
+    return matchesSearch && matchesStatus;
   });
 
-  // 🔥 THEN your return()
   return (
     <div className="p-8 bg-gray-100 min-h-screen">
       <h1 className="text-3xl font-bold mb-8 text-center">Job Applications</h1>

@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import api from "../api";
 import { toast } from "react-toastify";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const AddJobForm = ({ onJobSaved, selectedJob }) => {
   const [formData, setFormData] = useState({
     title: "",
     company: "",
     status: "Applied",
-    notes: ""
+    notes: "",
+    appliedDate: new Date()
   });
   const [loading, setLoading] = useState(false);
 
@@ -18,7 +21,8 @@ const AddJobForm = ({ onJobSaved, selectedJob }) => {
         title: selectedJob.role || "",
         company: selectedJob.companyName || "",
         status: selectedJob.status || "Applied",
-        notes: selectedJob.notes || ""
+        notes: selectedJob.notes || "",
+        appliedDate: selectedJob.appliedDate ? new Date(selectedJob.appliedDate) : new Date()
       });
     } else {
       // Clear form if not editing
@@ -26,7 +30,7 @@ const AddJobForm = ({ onJobSaved, selectedJob }) => {
         title: "",
         company: "",
         status: "Applied",
-        notes: ""
+        notes: "",
       });
     }
   }, [selectedJob]);
@@ -47,7 +51,8 @@ const AddJobForm = ({ onJobSaved, selectedJob }) => {
       companyName: formData.company,
       role: formData.title,
       status: formData.status,
-      notes: formData.notes || ""
+      notes: formData.notes || "",
+      appliedDate: formData.appliedDate.toISOString()
     };
     if (selectedJob) {
       jobData.id = selectedJob.id;
@@ -63,6 +68,13 @@ const AddJobForm = ({ onJobSaved, selectedJob }) => {
         // If adding, do POST
         await api.post("/jobapplications", jobData);
         toast.success("🎉 Job Added Successfully!");
+        setFormData({
+          title: "",
+          company: "",
+          status: "Applied",
+          notes: "",
+          appliedDate: ""
+        });
       }
 
       onJobSaved(); // notify parent to refresh list + clear selected job
@@ -130,6 +142,17 @@ const AddJobForm = ({ onJobSaved, selectedJob }) => {
             <option>Offer Received</option>
             <option>Rejected</option>
           </select>
+        </div>
+        <div>
+          <label className="block mb-2 text-sm font-medium text-gray-700">
+            Applied Date
+          </label>
+          <DatePicker
+            selected={formData.appliedDate}
+            onChange={(date) => setFormData({ ...formData, appliedDate: date })}
+            dateFormat="yyyy-MM-dd"
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
         </div>
 
         <button
