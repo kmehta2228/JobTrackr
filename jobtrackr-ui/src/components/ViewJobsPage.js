@@ -6,7 +6,11 @@ const ViewJobsPage = ({ onEdit }) => {
     const [statusFilter, setStatusFilter] = useState("All");
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700 text-base font-semibold text-gray-800
+">
+                🔍 Search
+            </label>
             {/* Search Input */}
             <input
                 type="text"
